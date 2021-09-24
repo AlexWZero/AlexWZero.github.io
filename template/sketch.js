@@ -1,10 +1,4 @@
-// Project Title
-// Your Name
-// Date
-//
-// Extra for Experts:
-// - describe what you did to take this project "above and beyond"
-
+// First Demo
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -12,4 +6,7 @@ function setup() {
 
 function draw() {
   background(220);
+
+  
+  ellipse(mouseX, mouseY, 50, 100);
 }

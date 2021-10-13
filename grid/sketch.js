@@ -23,7 +23,7 @@ function mousePressed() {
   if (grid[cellY][cellX] === 1) {
     grid[cellY][cellX] = 0;
   }
-  else if (grid[cellY][cellX] === 1) {
+  else if (grid[cellY][cellX] === 0) {
     grid[cellY][cellX] = 1;
   }
 }

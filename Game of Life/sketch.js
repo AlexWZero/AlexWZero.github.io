@@ -4,12 +4,17 @@ let grid;
 let gridSize = 70;
 let cellWidth, cellHeight;
 let autoPlay = false;
+let gun;
+
+function preload() {
+  gun = loadJSON("assets/gosper-gun.json"); // assumes gridsize is 70
+}
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
   grid = createEmpty2DArray(gridSize, gridSize);
   cellWidth = width/gridSize;
-  cellHeight = height/gridSize;
+  cellHeight = cellWidth;
 }
 
 function draw() {
@@ -32,6 +37,9 @@ function keyPressed() {
   }
   if (key === "p") {
     autoPlay = !autoPlay;
+  }
+  if (key === "g") {
+    grid = gun;
   }
 }
 

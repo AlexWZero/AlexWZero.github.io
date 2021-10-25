@@ -24,6 +24,8 @@ let level3 = [
 let grid;
 let gridSize = 18;
 let cellHeight, cellWidth;
+let cellX;
+let cellY;
 
 function setup() {
   if (windowWidth < windowHeight) {
@@ -35,6 +37,8 @@ function setup() {
   cellWidth = width/gridSize;
   cellHeight = height/gridSize;
   grid = level3;
+  cellX = Math.floor(mouseX/cellWidth);
+  cellY = Math.floor(mouseY/cellHeight);
 }
 
 function draw() {
@@ -43,17 +47,23 @@ function draw() {
 
 }
 
+function mousePressed() {
+  let cellWidth = width/gridSize;
+  let cellHeight = height/gridSize;
+
+  if (grid[cellY][cellX] === 1) {
+    grid[cellY][cellX] = 2;
+  }
+}
+
 function displayGrid() {
   for (let y=0; y<gridSize; y++) {
     for (let x=0; x<gridSize; x++) {
       strokeWeight(0.5);
-      if (grid[y][x] === 0) {
-        rect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
-      }
-      if (grid[y][x] === 1) {
+      if (grid[cellY][cellX] === 2) {
         fill("black");
-        rect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
       }
+      rect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
     }
   }
 }

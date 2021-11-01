@@ -4,7 +4,7 @@ let ballArray = [];
 let elon;
 
 function preload() {
-  elon = loadImage("assets/elon moment.png");
+  elon = loadImage("assets/elon face.png");
 }
 
 function setup() {
@@ -19,18 +19,20 @@ function setup() {
 
 function draw() {
   background(220);
-
+  
   // for (let theBall of ballArray) {
   //   theBall.move();
   //   theBall.display();
   // }
-
+    
   for (let i=0; i<ballArray.length; i++) {
     ballArray[i].move();
     ballArray[i].display();
   }
-}
 
+}
+  
+  
 class Ball {
   constructor(x, y, theImage) {
     this.radius = random(20, 50);
@@ -48,7 +50,7 @@ class Ball {
       this.toDisplay = "image";
     }
   }
-
+    
   display() {
     if (this.toDisplay === "circle") {
       noStroke();
@@ -60,11 +62,11 @@ class Ball {
       image(this.theImage, this.x, this.y, this.radius*2, this.radius*2);
     }
   }
-
+    
   move() {
     this.x += this.dx;
     this.y += this.dy;
-
+    
     // check if need to bounce
     if (this.x + this.radius >= width || this.x - this.radius <= 0) {
       this.dx *= -1;
@@ -73,13 +75,33 @@ class Ball {
       this.dy *= -1;
     }
   }
+
+  isPointInBall(x, y) {
+    if (dist(x, y, this.x, this.y) < this.raius) {
+      // inside ball
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+}
+  
+function mousePressed() {
+  for (let i=ballArray.length-1; i >=0; i--) {
+    if (ballArray[i].isPointInBall(mouseX, mouseY)) {
+      ballArray.splice(i, 1);
+    }
+  }
 }
 
-function mousePressed() {
-  for (let i=0; i<5000; i++) {
-    let x = random(100, width-100);
-    let y = random(100, height-100);
-    let theBall = new Ball(mouseX, mouseY, elon);
-    ballArray.push(theBall);
+function keyPressed() {
+  if (key === " ") {
+    for (let i=0; i<5; i++) {
+      let x = random(100, width-100);
+      let y = random(100, height-100);
+      let theBall = new Ball(x, y, elon);
+      ballArray.push(theBall);
+    }
   }
 }

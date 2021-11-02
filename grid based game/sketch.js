@@ -78,7 +78,7 @@ function setup() {
   }
   cellWidth = width/gridSize;
   cellHeight = height/gridSize;
-  grid = level3;
+  grid = level2;
   
 }
 
@@ -97,8 +97,6 @@ function keyPressed() {
 }
 
 function mousePressed() {
-  let cellWidth = width/gridSize;
-  let cellHeight = height/gridSize;
   cellX = Math.floor(mouseX/cellWidth);
   cellY = Math.floor(mouseY/cellHeight);
 
@@ -106,33 +104,28 @@ function mousePressed() {
     grid[cellY][cellX] = 2;
   }
   if (grid[cellY][cellX] === 0) {
-    grid[cellY][cellX] = 3;
+    grid[cellY][cellX] = "X";
   }
 }
 
 function displayGrid() {
   for (let y=0; y<gridSize; y++) {
     for (let x=0; x<gridSize; x++) {
+      fill("white");
       strokeWeight(0.5);
+      rect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
+      
       if (grid[y][x] === 2) {
         fill("black");
+        strokeWeight(0.5);
+        rect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
       }
-      if (grid[y][x] === 1 || grid[y][x] === 0) {
-        fill("white");
+      else if (grid[y][x] === "X") {
+        fill("black");
+        textSize(cellWidth*0.75);
+        textAlign(CENTER, CENTER);
+        text(grid[y][x], x*cellWidth + cellWidth/2, y*cellHeight + cellHeight/2);
       }
-      if (grid[y][x] === 3) {
-        if (cellWidth > cellHeight) {
-          textSize(cellWidth*0.75);
-          textAlign(CENTER, CENTER);
-          text(grid[y][x], x*cellWidth + cellWidth/2, y*cellHeight + cellHeight/2);
-        }
-        else if (cellWidth < cellHeight) {
-          textSize(cellHeight*0.75);
-          textAlign(CENTER, CENTER);
-          text(grid[y][x], x*cellWidth + cellWidth/2, y*cellHeight + cellHeight/2);
-        }
-      }
-      rect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
     }
   }
 }

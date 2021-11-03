@@ -68,6 +68,7 @@ let gridSize = 18;
 let cellHeight, cellWidth;
 let cellX;
 let cellY;
+let nums = [];
 
 function setup() {
   if (windowWidth < windowHeight) {
@@ -85,6 +86,7 @@ function setup() {
 function draw() {
   background(220);
   displayGrid();
+  displayNums();
 }
 
 function keyPressed() {
@@ -105,6 +107,21 @@ function mousePressed() {
   }
   if (grid[cellY][cellX] === 0) {
     grid[cellY][cellX] = "X";
+  }
+}
+
+function displayNums() {
+  for (let y=0; y<grid.length; y++) {
+    for (let x=0; x<grid[y].length; x++) {
+      let counting = 0;
+      if (grid[y][x] === 1 || grid[y][x] === 2) {
+        counting++;
+      }
+      else {
+        nums.push(counting);
+        counting = 0;
+      }
+    }
   }
 }
 

@@ -90,6 +90,9 @@ function draw() {
 }
 
 function keyPressed() {
+  if (key === "1") {
+    grid = level1;
+  }
   if (key === "2") {
     grid = level2;
   }

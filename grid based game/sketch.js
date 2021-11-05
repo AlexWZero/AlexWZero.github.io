@@ -63,15 +63,16 @@ let level3 = [
   [0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
 
-let grid;
+let menu = true;
+let grid = "menu";
 let gridSize = 18;
 let cellHeight, cellWidth;
 let cellX;
 let cellY;
 let nums = [];
 let currentLevel;
-let buttonWidth = 50;
-let buttonHeight = 30;
+let buttonWidth = 100;
+let buttonHeight = 100;
 let firstLvl, secondLvl, thirdLvl;
 
 function setup() {
@@ -83,19 +84,22 @@ function setup() {
   }
   cellWidth = width/gridSize;
   cellHeight = height/gridSize;
-  grid = level2;
-  firstLvl = new Button(level1, width*0.25, height/2, buttonWidth, buttonHeight);
-  secondLvl = new Button(level2, width*0.5, height/2, buttonWidth, buttonHeight);
-  thirdLvl = new Button(level3, width*0.75, height/2, buttonWidth, buttonHeight);
+  firstLvl = new Button(level1, width/5, height/2.3, buttonWidth, buttonHeight);
+  secondLvl = new Button(level2, width/2.3, height/2.3, buttonWidth, buttonHeight);
+  thirdLvl = new Button(level3, width/1.5, height/2.3, buttonWidth, buttonHeight);
 }
 
 function draw() {
   background(220);
-  firstLvl.display();
-  secondLvl.display();
-  thirdLvl.display();
-  // displayGrid();
-  // displayNums();
+  if (menu === true) {
+    firstLvl.display();
+    secondLvl.display();
+    thirdLvl.display();
+  }
+  if (grid !== "menu") {
+    displayGrid();
+    displayNums();
+  }
 }
 
 function keyPressed() {
@@ -120,11 +124,18 @@ class Button {
     this.y = y;
     this.butWidth = butWidth;
     this.butHeight = butHeight;
+    this.hoverColor = "grey";
+    this.notHoverColor = "black";
   }
 
   display() {
     noStroke();
-    fill("black");
+    if (this.isHover(mouseX, mouseY)) {
+      fill(this.hoverColor);
+    }
+    else {
+      fill(this.notHoverColor);
+    }
     rect(this.x, this.y, this.butWidth, this.butHeight);
     if (this.level === level1) {
       fill("white");
@@ -145,9 +156,27 @@ class Button {
       text("3", this.x*this.butWidth + this.butWidth/2, this.y*this.butHeight + this.butHeight/2);
     }
   }
+
+  isHover(x, y) {
+    return x >= this.x && x <= this.x + this.butWidth &&
+           y >= this.y && y <= this.y + this.butHeight;
+  }
 }
 
 function mousePressed() {
+  if (firstLvl.isHover(mouseX, mouseY) && menu) {
+    grid = level1;
+    menu = false;
+  }
+  else if (secondLvl.isHover(mouseX, mouseY) && menu) {
+    grid = level2;
+    menu = false;
+  }
+  else if (thirdLvl.isHover(mouseX, mouseY) && menu) {
+    grid = level3;
+    menu = false;
+  }
+
   cellX = Math.floor(mouseX/cellWidth);
   cellY = Math.floor(mouseY/cellHeight);
 
@@ -178,7 +207,7 @@ function displayGrid() {
   for (let y=0; y<gridSize; y++) {
     for (let x=0; x<gridSize; x++) {
       fill("white");
-      strokeWeight(0.5);
+      strokeWeight(1);
       rect(x*cellWidth, y*cellHeight, cellWidth, cellHeight);
       
       if (grid[y][x] === 2) {
